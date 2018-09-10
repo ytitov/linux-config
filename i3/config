@@ -166,8 +166,9 @@ bar {
         #status_command i3status 
 
         ## TO INSTALL THIS SEE: https://github.com/greshake/i3status-rust
-        font pango:DejaVu Sans Mono, FontAwesome 12
+        font pango:DejaVu Sans Mono, FontAwesome 10
         position top
+        status_command ~/.local/bin/i3status-rs ~/.config/i3/i3status.rs.config.toml 
         colors {
         separator #666666
         background #222222
@@ -177,7 +178,6 @@ bar {
         inactive_workspace #333333 #333333 #888888
         urgent_workspace #2f343a #900000 #ffffff
     }
-        status_command ~/.local/bin/i3status-rs ~/.config/i3/i3status.rs.config.toml 
 }
 
 #colors border, background, text, indicator, child_border
