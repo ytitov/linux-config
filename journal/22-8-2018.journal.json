@@ -1,0 +1,40 @@
+{
+  "entries": [
+    {
+      "title": "svcty deployment",
+      "body": " finally got things working on server with a wordpress site wwith ssl",
+      "date_ms": 1537680796280,
+      "tags": [
+        "svcty"
+      ]
+    },
+    {
+      "title": "archive entries",
+      "body": " would be nice to be able to archive entries so they stop showing up, because at this point the list of files will get bigger and bigger",
+      "date_ms": 1537680969191,
+      "tags": [
+        "journal",
+        "todo"
+      ]
+    },
+    {
+      "title": "journal database serveice",
+      "body": " add endpoint on svcty to save my journal entries instead of these json files possibly (or both)",
+      "date_ms": 1537681072877,
+      "tags": [
+        "svcty",
+        "journal",
+        "todo"
+      ]
+    },
+    {
+      "title": "journal show entries with tags",
+      "body": " add feature to show entries with certain tags, already have the map made, so should be relatively quick and easy",
+      "date_ms": 1537681171554,
+      "tags": [
+        "todo",
+        "journal"
+      ]
+    }
+  ]
+}
