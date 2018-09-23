@@ -14,3 +14,15 @@ alias dropbox=~/.dropbox-dist/dropboxd;
 
 echo 'git log --pretty=format:"%ad - %an: %s" --after="2018-09-09" --until="2018-09-15"'
 echo 'gives you a date range'
+
+echo 'overriding the cd func to store pwd'
+
+function cd {
+  #builtin cd "$@" && ls -F
+  builtin cd "$@" && ls
+  pwd
+  pwd > /mnt/16m/pwd.txt
+}
+
+echo 'creating alias for gnome terminal to go to pwd'
+alias gt="gnome-terminal --working-directory=$(cat /mnt/16m/pwd.txt)"

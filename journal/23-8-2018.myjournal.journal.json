@@ -1,0 +1,12 @@
+{
+  "entries": [
+    {
+      "title": "projects",
+      "body": " added so from now on it scans the directory recursively until it finds a .git directory if it does it uses that folder as the project name",
+      "date_ms": 1537731371515,
+      "tags": [
+        "projects"
+      ]
+    }
+  ]
+}

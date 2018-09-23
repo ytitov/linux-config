@@ -1,0 +1,11 @@
+{
+  "meta": {},
+  "entries": [
+    {
+      "title": "forget template forms",
+      "body": " realized that by attempting to reduce the size of the json object and using a template for attempting to describe a dropdown, it is a waste of time considering gzip works great. so stop chasing that idea and go back to normal rendering its much more cohesive and easier to understand and requires much less code",
+      "date_ms": 1537731832743,
+      "tags": []
+    }
+  ]
+}

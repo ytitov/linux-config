@@ -30,7 +30,8 @@ font pango:monospace 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+# gt is aliased with some options
+bindsym $mod+Return exec gnome-terminal --working-directory=$(cat /mnt/16m/pwd.txt)
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -222,7 +223,7 @@ exec_always --no-startup-id xmodmap ~/.Xmodmap
 exec --no-startup-id nm-applet 
 # startup programs on specific desktops
 #exec --no-startup-id i3-msg 'workspace 2; exec chromium-browser'
-exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal --working-directory=/home/yuri/workspace'
+exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal --working-directory=$(pwd)'
 exec --no-startup-id i3-msg 'workspace 10; exec chromium-browser'
 #exec --no-startup-id i3-msg 'workspace 1; exec chromium'
 
