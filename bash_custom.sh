@@ -17,6 +17,8 @@ echo 'gives you a date range'
 
 echo 'overriding the cd func to store pwd'
 
+export PATH=$PATH:~/.local/bin
+
 function cd {
   #builtin cd "$@" && ls -F
   builtin cd "$@" && ls
