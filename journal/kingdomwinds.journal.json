@@ -6,14 +6,16 @@
     {
       "title": "shipengine template",
       "body": " stopped inside the shipengine account, spend a lot of time today but i would say bill for 1 or 2 hours... I dont know",
-      "date_ms": 1537564993496
+      "date_ms": 1537564993496,
+      "tags": []
     },
     {
       "title": "shipengine template",
       "body": " stopped inside the shipengine account, spend a lot of time today but i would say bill for 1 or 2 hours... I dont know",
       "date_ms": 1537564993496,
       "tags": [
-        "name"
+        "name",
+        "archived"
       ]
     },
     {
@@ -21,8 +23,15 @@
       "body": " i need to practice with balls",
       "date_ms": 1537643028569,
       "tags": [
-        "something"
+        "something",
+        "archived"
       ]
+    },
+    {
+      "title": "issues work",
+      "body": " pushing and updating issues work 1hr",
+      "date_ms": 1538401037901,
+      "tags": []
     }
   ]
 }
