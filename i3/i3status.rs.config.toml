@@ -38,7 +38,18 @@ interval = 1
 format = "{1m}"
 
 #[[block]]
+#block = "custom"
+#command = "amixer -c 1 sget Master"
+##command = "amixer -c 1 sget Master | awk -F\"[][]\" '/db/ { print $2}'"
+#interval = 100
+##command = "echo hey wassap"
+
+#[[block]]
 #block = "sound"
+#[[block]]
+#block = "weather"
+#format = "{weather} ({location}) {temp}°, {wind} m/s {direction}"
+#service = { name = "openweathermap", api_key = "b505355dd47a36c41be813889b83c2cd", city_id = "5398563", units = "metric" }
 
 [[block]]
 block = "time"

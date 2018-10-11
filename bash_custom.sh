@@ -30,9 +30,8 @@ function cd {
 echo 'creating alias for gnome terminal to go to pwd'
 alias gt="gnome-terminal --working-directory=$(cat /mnt/16m/pwd.txt)"
 
+alias get_master_vol="amixer -c 1 sget Master | awk -F\"[][]\" '/dB/ { print $2}'"
 
 
-
-
-
-export PATH=$PATH:~/.local/bin
+echo "to start any gnome do: env XDG_CURRENT_DESKTOP=GNOME gnome-control-center"
+echo "git log --graph --decorate --pretty=oneline --abbrev-commit master origin/master 231_shipping_settings"

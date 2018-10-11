@@ -1,4 +1,5 @@
 call plug#begin('$HOME/.local/share/nvim/plugged')
+Plug 'w0rp/ale' 
 " on demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " javascript
@@ -9,7 +10,7 @@ Plug 'mxw/vim-jsx', {'for': ['javascript.jsx']}
 Plug 'othree/html5.vim', {'for': ['html']}
 
 " typescript ... yuck
-Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
+"Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
 
 Plug 'fatih/vim-go', {'for': ['go']}
 
@@ -121,3 +122,13 @@ autocmd FileType terraform let g:terraform_fmt_on_save=1
 com! FormatJSON %!python -m json.tool
 
 set ic
+
+let g:ale_lint_on_save=1
+let g:ale_lint_on_text_changed='never'
+let g:ale_lint_on_filetype_changed=0
+let g:let_set_highlights=0
+
+" PHP
+augroup enterbuffer 
+  autocmd BufNewFile,BufRead *.php set formatprg=php-formatter
+augroup end
