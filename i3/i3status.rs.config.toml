@@ -50,6 +50,17 @@ format = "{1m}"
 #block = "weather"
 #format = "{weather} ({location}) {temp}°, {wind} m/s {direction}"
 #service = { name = "openweathermap", api_key = "b505355dd47a36c41be813889b83c2cd", city_id = "5398563", units = "metric" }
+[[block]]
+block = "custom"
+cycle = ["echo 📻"]
+on_click = "pavucontrol"
+
+[[block]]
+block = "custom"
+cycle = ["echo ⚙️"]
+on_click = "exec env XDG_CURRENT_DESKTOP=GNOME gnome-control-center"
+
+
 
 [[block]]
 block = "time"
