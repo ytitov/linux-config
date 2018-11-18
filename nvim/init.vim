@@ -18,6 +18,8 @@ Plug 'rhysd/vim-clang-format', {'for': ['c','cpp']}
 
 " rust
 Plug 'rust-lang/rust.vim', {'for': ['rust']}
+Plug 'cespare/vim-toml', {'for': ['toml']}
+Plug 'maralla/vim-toml-enhance', {'for': ['toml']}
 
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'powerline/powerline'
@@ -28,7 +30,10 @@ Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'morhetz/gruvbox'
 Plug 'powerline/fonts'
 
+" PHP =================================================
 Plug '2072/PHP-Indenting-for-VIm', { 'for': ['php'] }
+Plug 'tobyS/pdv', { 'for': ['php'] }
+Plug 'tobyS/vmustache', { 'for': ['php'] }
 
 " terraform files
 Plug 'hashivim/vim-terraform', { 'for': ['terraform'] }
@@ -36,6 +41,8 @@ Plug 'hashivim/vim-terraform', { 'for': ['terraform'] }
 " graph ql files
 Plug 'jparise/vim-graphql', { 'for': 'graphql' }
 
+" MY PLUGIN STUFF =====================================
+Plug '~/.config/nvim/myplugins/myphp', { 'for': ['php'] }
 
 call plug#end()
 
@@ -76,27 +83,6 @@ let g:ctrlp_custom_ignore = {
 " ctrl-n opens
 map <C-n> :NERDTreeToggle<CR>
 
-" vim-javascript
-let g:javascript_plugin_jsdoc=1
-"set foldmethod=syntax
-let g:javascript_conceal_function             = "ƒ"
-let g:javascript_conceal_arrow_function       = "⇒"
-let g:javascript_conceal_null                 = "ø"
-let g:javascript_conceal_NaN                  = "ℕ"
-set conceallevel=1
-" deplete for javascript
-let g:deoplete#enable_at_startup = 1
-" tern
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#filetypes = [
-                \ 'jsx',
-                \ 'javascript.jsx',
-                \ ]
-" Use tern_for_vim.
-autocmd FileType js g:tern#command = ["tern"]
-autocmd FileType js g:tern#arguments = ["--persistent"]
-
-
 " indentation
 filetype plugin indent on
 " show existing tab with 2 spaces width
@@ -128,7 +114,30 @@ let g:ale_lint_on_text_changed='never'
 let g:ale_lint_on_filetype_changed=0
 let g:let_set_highlights=0
 
-" PHP
+" PHP ========================================================================
 augroup enterbuffer 
   autocmd BufNewFile,BufRead *.php set formatprg=php-formatter
 augroup end
+
+" javascript =================================================================
+" vim-javascript
+let g:javascript_plugin_jsdoc=1
+"set foldmethod=syntax
+let g:javascript_conceal_function             = "ƒ"
+let g:javascript_conceal_arrow_function       = "⇒"
+let g:javascript_conceal_null                 = "ø"
+let g:javascript_conceal_NaN                  = "ℕ"
+set conceallevel=1
+" deplete for javascript
+let g:deoplete#enable_at_startup = 1
+" tern
+let g:deoplete#sources#ternjs#types = 1
+let g:deoplete#sources#ternjs#filetypes = [
+                \ 'jsx',
+                \ 'javascript.jsx',
+                \ ]
+" Use tern_for_vim.
+autocmd FileType js g:tern#command = ["tern"]
+autocmd FileType js g:tern#arguments = ["--persistent"]
+
+
