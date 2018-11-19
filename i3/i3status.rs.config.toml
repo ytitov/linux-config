@@ -4,12 +4,17 @@ theme = "solarized-dark"
 icons = "awesome"
 
 [[block]]
+block = "custom"
+command = "echo 📁 [$(cat /mnt/16m/pwd.txt)]"
+interval = 1
+
+[[block]]
 block = "net"
 device = "enp10s0"
 ssid = true
 ip = true
-speed_up = true 
-graph_up = true
+speed_up = false
+graph_up = false 
 interval = 5
 
 [[block]]
@@ -50,6 +55,19 @@ format = "{1m}"
 #block = "weather"
 #format = "{weather} ({location}) {temp}°, {wind} m/s {direction}"
 #service = { name = "openweathermap", api_key = "b505355dd47a36c41be813889b83c2cd", city_id = "5398563", units = "metric" }
+[[block]]
+block = "custom"
+cycle = ["echo 📻"]
+on_click = "pavucontrol"
+
+[[block]]
+block = "custom"
+cycle = ["echo ⚙️"]
+on_click = "exec env XDG_CURRENT_DESKTOP=GNOME gnome-control-center"
+
+#format = "{weather} ({location}) {temp}°, {wind} m/s {direction}"
+#service = { name = "openweathermap", api_key = "b505355dd47a36c41be813889b83c2cd", city_id = "5398563", units = "metric" }
+
 
 [[block]]
 block = "time"
