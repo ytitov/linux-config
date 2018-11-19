@@ -20,6 +20,7 @@ echo 'overriding the cd func to store pwd';
 # make sure to add to fstab: 
 # tmpfs     /mnt/16m     tmpfs     rw,size=16M,x-gvfs-show     0 0
 
+touch /mnt/16m/pwd.txt
 function cd {
   #builtin cd "$@" && ls -F
   builtin cd "$@" && ls
