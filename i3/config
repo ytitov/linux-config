@@ -222,6 +222,8 @@ bindsym $mod+b exec "rfkill unblock bluetooth && bluetooth-wizard"
 exec_always --no-startup-id xmodmap ~/.Xmodmap
 # networking applet
 exec --no-startup-id nm-applet 
+# blue man
+exec --no-startup-id blueman-applet 
 # startup programs on specific desktops
 #exec --no-startup-id i3-msg 'workspace 2; exec chromium-browser'
 exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal --working-directory=$(pwd)'
