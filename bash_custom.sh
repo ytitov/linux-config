@@ -35,7 +35,8 @@ alias gt="gnome-terminal --working-directory=$(cat /mnt/16m/pwd.txt)"
 alias get_master_vol="amixer -c 1 sget Master | awk -F\"[][]\" '/dB/ { print $2}'"
 alias ls="ls --color=auto --sort=extension --group-directories-first"
 
-source ~/.config/functions.sh
+source ~/.config/bash_functions.sh
+source ~/.config/bash_docker_completion.sh
 
 # Put this into ~/.bashrc
 # if [ -f ~/.config/bash_custom.sh ]; then

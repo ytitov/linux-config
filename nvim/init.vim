@@ -12,10 +12,6 @@ Plug 'othree/html5.vim', {'for': ['html']}
 " typescript ... yuck
 "Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
 
-Plug 'fatih/vim-go', {'for': ['go']}
-
-Plug 'rhysd/vim-clang-format', {'for': ['c','cpp']}
-
 " rust
 Plug 'rust-lang/rust.vim', {'for': ['rust']}
 Plug 'cespare/vim-toml', {'for': ['toml']}
@@ -73,7 +69,7 @@ omap <F12> <Esc>
 " ctrl p settings, include directory of cur file, and nearest ancestor with
 " .git .hg. svn .bzr....
 " let g:ctrlp_working_path_mode = 'ra' " r is search from nearest ancestor (.git .svn etc)
-let g:ctrlp_working_path_mode = 'ra' " w is search from cwd 
+let g:ctrlp_working_path_mode = 'w' " w is search from cwd 
 let g:ctrlp_custom_ignore = {
   \ 'dir':  'node_modules\|\.(git|hg|svn|docs)$',
   \ 'file': '\v\.(exe|so|dll)$',
@@ -99,7 +95,7 @@ set termguicolors
 autocmd FileType cpp ClandFormatAutoEnable
 
 " runs :RustFmt everytime we save a rust file
-" autocmd FileType rust let g:rustfmt_autosave=1
+"autocmd FileType rust let g:rustfmt_autosave=1
 
 " this is supposed to auto format on save but it doesnt do anything....
 autocmd FileType terraform let g:terraform_fmt_on_save=1
