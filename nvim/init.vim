@@ -99,7 +99,7 @@ set termguicolors
 autocmd FileType cpp ClandFormatAutoEnable
 
 " runs :RustFmt everytime we save a rust file
-autocmd FileType rust let g:rustfmt_autosave=1
+" autocmd FileType rust let g:rustfmt_autosave=1
 
 " this is supposed to auto format on save but it doesnt do anything....
 autocmd FileType terraform let g:terraform_fmt_on_save=1
@@ -107,7 +107,7 @@ autocmd FileType terraform let g:terraform_fmt_on_save=1
 " autoformat a json file just type :FormatJSON
 com! FormatJSON %!python -m json.tool
 
-set ic
+set noic
 
 let g:ale_lint_on_save=1
 let g:ale_lint_on_text_changed='never'
