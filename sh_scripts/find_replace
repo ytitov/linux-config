@@ -1,0 +1,15 @@
+#!/bin/bash
+EXTENSION=$1
+FIND=$2
+REP=$3
+
+echo "adding find_replace bash function for doing recursive in place search and replace inside files"
+
+if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]
+then
+  echo "requires three args: extension, find regex, replace regex";
+else
+  echo "Using extension $1 find: $2 replace with: $3"
+  echo "find . -name "*.$1" -exec sed -i s/$2/$3/g {} +"
+  find . -name "*.$1" -exec sed -i s/$2/$3/g {} +
+fi
