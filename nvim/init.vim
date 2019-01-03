@@ -103,7 +103,7 @@ autocmd FileType terraform let g:terraform_fmt_on_save=1
 " autoformat a json file just type :FormatJSON
 com! FormatJSON %!python -m json.tool
 
-set ic
+set noic
 
 let g:ale_lint_on_save=1
 let g:ale_lint_on_text_changed='never'
