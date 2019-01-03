@@ -8,15 +8,16 @@ block = "custom"
 command = "echo 📁 [$(cat /mnt/16m/pwd.txt)]"
 interval = 1
 
-[[block]]
-block = "net"
-device = "enp10s0"
-ssid = true
-ip = true
-speed_up = false
-graph_up = false 
-interval = 5
-
+#need to figure out network name
+#[[block]]
+#block = "net"
+#device = "enp10s0"
+#ssid = true
+#ip = true
+#speed_up = false
+#graph_up = false 
+#interval = 5
+#
 [[block]]
 block = "disk_space"
 path = "/"
