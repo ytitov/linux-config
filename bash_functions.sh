@@ -5,4 +5,4 @@ cd () {
   pwd > /mnt/16m/pwd.txt
 }
 
-source find_replace
+source ~/.config/sh_scripts/find_replace
