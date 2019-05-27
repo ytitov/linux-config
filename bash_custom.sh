@@ -64,3 +64,5 @@ source ~/.config/bash_functions.sh
 #echo 'dropbox starts ~/.dropbox-dist/dropboxd'
 #alias dropbox=~/.dropbox-dist/dropboxd
 PATH=$PATH:~/.config/sh_scripts/
+PATH="$HOME/.local/share/bin:$PATH"
+alias vim=nvim

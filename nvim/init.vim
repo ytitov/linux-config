@@ -12,6 +12,11 @@ Plug 'othree/html5.vim', {'for': ['html']}
 " typescript ... yuck
 "Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
 
+" docker stuff
+Plug 'ekalinin/Dockerfile.vim', {'for': ['dockerfile']}
+Plug 'stephpy/vim-yaml', {'for': ['yaml']}
+Plug 'tpope/vim-dotenv', {'for': ['dotenv']}
+
 " rust
 Plug 'rust-lang/rust.vim', {'for': ['rust']}
 Plug 'cespare/vim-toml', {'for': ['toml']}
@@ -33,6 +38,8 @@ Plug 'tobyS/vmustache', { 'for': ['php'] }
 
 " terraform files
 Plug 'hashivim/vim-terraform', { 'for': ['terraform'] }
+
+Plug 'chr4/nginx.vim', { 'for': 'nginx' }
 
 " graph ql files
 Plug 'jparise/vim-graphql', { 'for': 'graphql' }
@@ -71,7 +78,7 @@ omap <F12> <Esc>
 " let g:ctrlp_working_path_mode = 'ra' " r is search from nearest ancestor (.git .svn etc)
 let g:ctrlp_working_path_mode = 'w' " w is search from cwd 
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  'node_modules\|\.(git|hg|svn|docs)$',
+  \ 'dir':  'target\|node_modules\|\.(git|hg|svn|docs)$',
   \ 'file': '\v\.(exe|so|dll)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
