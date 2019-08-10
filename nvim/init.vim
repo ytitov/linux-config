@@ -2,7 +2,8 @@ call plug#begin('$HOME/.local/share/nvim/plugged')
 Plug 'w0rp/ale' 
 " on demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-" javascript
+" javascript ================================================
+Plug 'maksimr/vim-jsbeautify', {'for': ['javascript', 'javascript.jsx', 'html', 'css', 'json']}
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
 Plug 'mxw/vim-jsx', {'for': ['javascript.jsx']}
 " vim-jsx-improve doesnt work with vim-jsx
@@ -142,5 +143,8 @@ let g:deoplete#sources#ternjs#filetypes = [
 " Use tern_for_vim.
 autocmd FileType js g:tern#command = ["tern"]
 autocmd FileType js g:tern#arguments = ["--persistent"]
+autocmd BufWritePre *.jsx call JsxBeautify()
+autocmd BufWritePre *.js call JsBeautify()
+autocmd BufWritePre *.html call HtmlBeautify()
 
 

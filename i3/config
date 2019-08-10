@@ -168,7 +168,7 @@ bar {
     #status_command i3status 
 
     ## TO INSTALL THIS SEE: https://github.com/greshake/i3status-rust
-    font pango:DejaVu Sans Mono, FontAwesome 10
+    font pango:DejaVu Sans Mono, FontAwesome 8
     position top
     status_command i3status-rs ~/.config/i3/i3status.rs.config.toml 
 
@@ -230,6 +230,7 @@ exec --no-startup-id blueman-applet
 exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal --working-directory=$(pwd)'
 #exec --no-startup-id i3-msg 'workspace 10; exec chromium-browser'
 #exec --no-startup-id i3-msg 'workspace 1; exec chromium'
+exec --no-startup-id setxkbmap -option caps:escape
 
 #exec --no-startup-id compton --config ~/.config/compton.conf -b
 #exec --no-startup-id flameshot

@@ -5,7 +5,7 @@ icons = "awesome"
 
 [[block]]
 block = "custom"
-command = "echo 📁 [$(cat /mnt/16m/pwd.txt)]"
+command = "echo f07c 📁 [$(cat /mnt/16m/pwd.txt)]"
 interval = 1
 
 #need to figure out network name
@@ -59,6 +59,11 @@ format = "{1m}"
 [[block]]
 block = "custom"
 cycle = ["echo SND"]
+on_click = "pavucontrol"
+
+[[block]]
+block = "custom"
+cycle = ["echo kbd: EN", "echo kbd: RU"]
 on_click = "pavucontrol"
 
 [[block]]

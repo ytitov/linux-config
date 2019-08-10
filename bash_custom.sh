@@ -1,6 +1,7 @@
 #!/bin/bash
-echo "====== Running ~/.config/bash_custom.sh ======"
+echo "====== Running ~/.config/bash_custom.sh -======"
 
+#export XDG_CONFIG_HOME=~/.config
 DIRCOLORS=~/.config/dircolors.config
 echo "creating /mnt/16m/pwd file"
 touch /mnt/16m/pwd.txt
@@ -36,6 +37,9 @@ alias get_master_vol="amixer -c 1 sget Master | awk -F\"[][]\" '/dB/ { print $2}
 alias ls="ls --color=auto --sort=extension --group-directories-first"
 
 source ~/.config/bash_functions.sh
+source /usr/share/git/completion/git-completion.bash
+export GIT_CONFIG=~/.config/.gitconfig
+
 #source ~/.config/bash_docker_completion.sh
 
 # Put this into ~/.bashrc
