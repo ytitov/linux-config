@@ -3,9 +3,12 @@ Plug 'w0rp/ale'
 " on demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " javascript ================================================
-Plug 'maksimr/vim-jsbeautify', {'for': ['javascript', 'javascript.jsx', 'html', 'css', 'json']}
+"Plug 'maksimr/vim-jsbeautify', {'for': ['javascript', 'javascript.jsx', 'html', 'css', 'json']}
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
 Plug 'mxw/vim-jsx', {'for': ['javascript.jsx']}
+Plug 'posva/vim-vue', {'for': ['vue']}
+Plug 'leafgarland/typescript-vim', {'for': ['ts']}
+Plug  'peitalin/vim-jsx-typescript', {'for': ['typescriptreact']}
 " vim-jsx-improve doesnt work with vim-jsx
 "Plug 'neoclide/vim-jsx-improve', {'for': ['javascript.jsx']}
 Plug 'othree/html5.vim', {'for': ['html']}
@@ -17,6 +20,9 @@ Plug 'othree/html5.vim', {'for': ['html']}
 Plug 'ekalinin/Dockerfile.vim', {'for': ['dockerfile']}
 Plug 'stephpy/vim-yaml', {'for': ['yaml']}
 Plug 'tpope/vim-dotenv', {'for': ['dotenv']}
+
+" dart
+Plug 'dart-lang/dart-vim-plugin', {'for' :['dart']}
 
 " rust
 Plug 'rust-lang/rust.vim', {'for': ['rust']}
@@ -76,11 +82,11 @@ cmap <F12> <Esc>
 omap <F12> <Esc>
 " ctrl p settings, include directory of cur file, and nearest ancestor with
 " .git .hg. svn .bzr....
-" let g:ctrlp_working_path_mode = 'ra' " r is search from nearest ancestor (.git .svn etc)
-let g:ctrlp_working_path_mode = 'w' " w is search from cwd 
+let g:ctrlp_working_path_mode = 'ra' " r is search from nearest ancestor (.git .svn etc)
+" let g:ctrlp_working_path_mode = 'w' " w is search from cwd 
 let g:ctrlp_custom_ignore = {
   \ 'dir':  'target\|node_modules\|\.(git|hg|svn|docs)$',
-  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'file': '\v\.(exe|so|dll|jar)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
 
@@ -143,8 +149,11 @@ let g:deoplete#sources#ternjs#filetypes = [
 " Use tern_for_vim.
 autocmd FileType js g:tern#command = ["tern"]
 autocmd FileType js g:tern#arguments = ["--persistent"]
-autocmd BufWritePre *.jsx call JsxBeautify()
-autocmd BufWritePre *.js call JsBeautify()
+"autocmd BufWritePre *.jsx call JsxBeautify()
+"autocmd BufWritePre *.js call JsBeautify()
 autocmd BufWritePre *.html call HtmlBeautify()
 
+" set filetype to dart
+au BufRead,BufNewFile *.dart set filetype=dart
 
+let g:python3_host_prog = '/usr/bin/python3'

@@ -37,7 +37,6 @@ alias get_master_vol="amixer -c 1 sget Master | awk -F\"[][]\" '/dB/ { print $2}
 alias ls="ls --color=auto --sort=extension --group-directories-first"
 
 source ~/.config/bash_functions.sh
-source /usr/share/git/completion/git-completion.bash
 export GIT_CONFIG=~/.config/.gitconfig
 
 #source ~/.config/bash_docker_completion.sh
@@ -67,6 +66,26 @@ export GIT_CONFIG=~/.config/.gitconfig
 #
 #echo 'dropbox starts ~/.dropbox-dist/dropboxd'
 #alias dropbox=~/.dropbox-dist/dropboxd
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
+#export JAVA_HOME=/usr/lib/jvm/java-13-openjdk
 PATH=$PATH:~/.config/sh_scripts/
 PATH="$HOME/.local/share/bin:$PATH"
+PATH="$JAVA_HOME/bin:$PATH"
+export ANDROID_HOME=/opt/android-sdk
+#export ANDROID_SDK_ROOT=/opt/android-sdk #issue recommended to remove this per: https://stackoverflow.com/questions/39645178/panic-broken-avd-system-path-check-your-android-sdk-root-value
+#export ANDROID_HOME=~/Android/Sdk
+#export ANDROID_SDK_ROOT=~/Android/Sdk
+#export PATH=$JAVA_HOME/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$PATH
+#export PATH=$ANDROID_HOME/tools/bin:$PATH
 alias vim=nvim
+export PATH="$HOME/flutter/bin:$PATH"
+# detect the timezone
+#tzupdate -p
+#source /usr/share/git/completion/git-completion.bash
+echo "Writing the list of installed packages to ~/.config/installed_packages.txt"
+LC_ALL=C pacman -Qi | awk '/^Name/{name=$3} /^Installed Size/{print $4$5, name}' | sort -h > ~/.config/installed_packages.txt
+# for sway rempap esc to caps
+export XKB_DEFAULT_OPTIONS=caps:escape
+echo "wifi: nmtui/nm-connection-editor"
+echo "bluetooth: blueman-manager"
+echo "monitor settings: wdisplays"
