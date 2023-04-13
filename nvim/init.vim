@@ -43,6 +43,9 @@ Plug 'jparise/vim-graphql', { 'for': 'graphql' }
 " MY PLUGIN STUFF =====================================
 " Plug '~/.config/nvim/myplugins/myphp', { 'for': ['php'] }
 
+" markdown =====================================
+Plug 'SidOfc/mkdx', { 'for': 'markdown' }
+
 " GENERIC ===========================================
 Plug 'dense-analysis/ale' 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -127,6 +130,20 @@ let g:ale_rust_cargo_check_tests=1
 let g:ale_set_highlights=0
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
+" markdown ========================================================================
+autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
+" syntax highlighting in md
+let g:markdown_fenced_languages = ['sh', 'bash',
+  \ 'javascript',
+  \ 'xml', 'yaml', 'json', 'html',
+  \ 'python', 'ruby', 'vim'
+  \ ]
+let g:mkdx#settings = { 'highlight': { 'enable': 1 },
+  \ 'enter': { 'shift': 1 },
+  \ 'links': { 'external': { 'enable': 1 } },
+  \ 'toc' : { 'text': 'Table Of Contents', 'update_on_write': 1 },
+  \ 'fold': { 'enable': 1 } }
 
 " PHP ========================================================================
 " augroup enterbuffer 
