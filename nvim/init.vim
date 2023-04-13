@@ -27,9 +27,9 @@ Plug 'maralla/vim-toml-enhance', {'for': ['toml']}
 
 
 " PHP =================================================
-""" Plug '2072/PHP-Indenting-for-VIm', { 'for': ['php'] }
-""" Plug 'tobyS/pdv', { 'for': ['php'] }
-""" Plug 'tobyS/vmustache', { 'for': ['php'] }
+" Plug '2072/PHP-Indenting-for-VIm', { 'for': ['php'] }
+" Plug 'tobyS/pdv', { 'for': ['php'] }
+" Plug 'tobyS/vmustache', { 'for': ['php'] }
 
 " terraform files
 Plug 'hashivim/vim-terraform', { 'for': ['terraform'] }
@@ -41,7 +41,7 @@ Plug 'chr4/nginx.vim', { 'for': 'nginx' }
 Plug 'jparise/vim-graphql', { 'for': 'graphql' }
 
 " MY PLUGIN STUFF =====================================
-### Plug '~/.config/nvim/myplugins/myphp', { 'for': ['php'] }
+" Plug '~/.config/nvim/myplugins/myphp', { 'for': ['php'] }
 
 " GENERIC ===========================================
 Plug 'dense-analysis/ale' 
