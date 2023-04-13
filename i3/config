@@ -9,6 +9,12 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+
+
+### exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+### exec hash dbus-update-activation-environment 2>/dev/null && \
+###      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -30,8 +36,17 @@ font pango:monospace 8
 floating_modifier $mod
 
 # start a terminal
-# gt is aliased with some options
-bindsym $mod+Return exec gnome-terminal --working-directory=$(cat /mnt/16m/pwd.txt)
+#originally was this, but doesn't work in sway:
+#bindsym $mod+Return exec gnome-terminal --working-directory=$(cat /mnt/16m/pwd.txt)
+#this is the replacement command:
+#bindsym $mod+Return exec dbus-launch gnome-terminal --working-directory=$(cat /mnt/16m/pwd.txt)
+
+# alacritty:
+bindsym $mod+Return exec alacritty --working-directory=$(cat /mnt/16m/pwd.txt)
+
+
+
+
 bindsym $mod+z exec env XDG_CURRENT_DESKTOP=GNOME gnome-control-center
 
 # kill focused window
@@ -219,10 +234,12 @@ exec_always --no-startup-id feh --randomize --bg-fill ~/Pictures/wallpapers/*
 #bindsym $mod+Shift+m exec --no-startup-id ~/myscripts/monitortoggle.sh
 # area screenshot
 bindsym $mod+Shift+p exec --no-startup-id gnome-screenshot -a 
-bindsym --release Print exec --no-startup-id flameshot gui
+bindsym --release Print exec env XDG_CURRENT_DESKTOP=sway --no-startup-id flameshot gui
 bindsym $mod+b exec "rfkill unblock bluetooth && bluetooth-wizard"
 # exec always means execute every time i3 is restarted
 # the normal exec only executes on initial startup
+exec mako
+     #exec env XDG_CURRENT_DESKTOP=sway flameshot
 exec_always --no-startup-id xmodmap ~/.Xmodmap
 # networking applet
 exec --no-startup-id nm-applet 
@@ -230,10 +247,10 @@ exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet 
 # startup programs on specific desktops
 #exec --no-startup-id i3-msg 'workspace 2; exec chromium-browser'
-exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal --working-directory=$(pwd)'
 #exec --no-startup-id i3-msg 'workspace 10; exec chromium-browser'
 #exec --no-startup-id i3-msg 'workspace 1; exec chromium'
 exec --no-startup-id setxkbmap -option caps:escape
+
 
 #exec --no-startup-id compton --config ~/.config/compton.conf -b
 #exec --no-startup-id flameshot

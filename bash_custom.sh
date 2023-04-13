@@ -5,6 +5,7 @@ echo "====== Running ~/.config/bash_custom.sh -======"
 DIRCOLORS=~/.config/dircolors.config
 echo "creating /mnt/16m/pwd file"
 touch /mnt/16m/pwd.txt
+echo "$HOME" > /mnt/16m/pwd.txt
 
 # enable color support of ls and also add handy aliases
 echo "customizing some colors"

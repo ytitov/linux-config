@@ -1,7 +1,4 @@
 call plug#begin('$HOME/.local/share/nvim/plugged')
-Plug 'w0rp/ale' 
-" on demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " javascript ================================================
 "Plug 'maksimr/vim-jsbeautify', {'for': ['javascript', 'javascript.jsx', 'html', 'css', 'json']}
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
@@ -9,50 +6,53 @@ Plug 'mxw/vim-jsx', {'for': ['javascript.jsx']}
 Plug 'posva/vim-vue', {'for': ['vue']}
 Plug 'leafgarland/typescript-vim', {'for': ['ts']}
 Plug  'peitalin/vim-jsx-typescript', {'for': ['typescriptreact']}
+Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx', 'ts', 'typescriptreact', 'vue'], 'do': 'npm install -g tern' }
 " vim-jsx-improve doesnt work with vim-jsx
 "Plug 'neoclide/vim-jsx-improve', {'for': ['javascript.jsx']}
+
 Plug 'othree/html5.vim', {'for': ['html']}
 
-" typescript ... yuck
-"Plug 'leafgarland/typescript-vim', {'for': ['typescript']}
-
-" docker stuff
+" docker stuff ================================================
 Plug 'ekalinin/Dockerfile.vim', {'for': ['dockerfile']}
 Plug 'stephpy/vim-yaml', {'for': ['yaml']}
 Plug 'tpope/vim-dotenv', {'for': ['dotenv']}
 
-" dart
+" dart ===================================================
 Plug 'dart-lang/dart-vim-plugin', {'for' :['dart']}
 
-" rust
+" rust =======================================
 Plug 'rust-lang/rust.vim', {'for': ['rust']}
 Plug 'cespare/vim-toml', {'for': ['toml']}
 Plug 'maralla/vim-toml-enhance', {'for': ['toml']}
 
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'powerline/powerline'
-
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-
-Plug 'morhetz/gruvbox'
-Plug 'powerline/fonts'
 
 " PHP =================================================
-Plug '2072/PHP-Indenting-for-VIm', { 'for': ['php'] }
-Plug 'tobyS/pdv', { 'for': ['php'] }
-Plug 'tobyS/vmustache', { 'for': ['php'] }
+""" Plug '2072/PHP-Indenting-for-VIm', { 'for': ['php'] }
+""" Plug 'tobyS/pdv', { 'for': ['php'] }
+""" Plug 'tobyS/vmustache', { 'for': ['php'] }
 
 " terraform files
 Plug 'hashivim/vim-terraform', { 'for': ['terraform'] }
 
+" nginx ============================================
 Plug 'chr4/nginx.vim', { 'for': 'nginx' }
 
-" graph ql files
+" graph ql files ==================================
 Plug 'jparise/vim-graphql', { 'for': 'graphql' }
 
 " MY PLUGIN STUFF =====================================
-Plug '~/.config/nvim/myplugins/myphp', { 'for': ['php'] }
+### Plug '~/.config/nvim/myplugins/myphp', { 'for': ['php'] }
+
+" GENERIC ===========================================
+Plug 'dense-analysis/ale' 
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'powerline/powerline'
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+Plug 'morhetz/gruvbox'
+Plug 'powerline/fonts'
 
 call plug#end()
 
@@ -85,7 +85,7 @@ omap <F12> <Esc>
 let g:ctrlp_working_path_mode = 'ra' " r is search from nearest ancestor (.git .svn etc)
 " let g:ctrlp_working_path_mode = 'w' " w is search from cwd 
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  'target\|node_modules\|\.(git|hg|svn|docs)$',
+  \ 'dir':  'docs\|target\|node_modules\|\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll|jar)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
@@ -115,19 +115,23 @@ autocmd FileType cpp ClandFormatAutoEnable
 autocmd FileType terraform let g:terraform_fmt_on_save=1
 
 " autoformat a json file just type :FormatJSON
-com! FormatJSON %!python -m json.tool
+com! FmtJSON %!python -m json.tool
 
 set noic
 
+let g:ale_lint_on_enter=1
 let g:ale_lint_on_save=1
 let g:ale_lint_on_text_changed='never'
 let g:ale_lint_on_filetype_changed=0
-let g:let_set_highlights=0
+let g:ale_rust_cargo_check_tests=1
+let g:ale_set_highlights=0
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " PHP ========================================================================
-augroup enterbuffer 
-  autocmd BufNewFile,BufRead *.php set formatprg=php-formatter
-augroup end
+" augroup enterbuffer 
+"   autocmd BufNewFile,BufRead *.php set formatprg=php-formatter
+" augroup end
 
 " javascript =================================================================
 " vim-javascript
@@ -157,3 +161,5 @@ autocmd BufWritePre *.html call HtmlBeautify()
 au BufRead,BufNewFile *.dart set filetype=dart
 
 let g:python3_host_prog = '/usr/bin/python3'
+
+:autocmd VimResized * wincmd =
