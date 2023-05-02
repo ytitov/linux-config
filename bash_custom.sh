@@ -4,9 +4,6 @@ echo "====== Running ~/.config/bash_custom.sh -======"
 #export XDG_CONFIG_HOME=~/.config
 DIRCOLORS=~/.config/dircolors.config
 PWD_FILE_LOC=${PWD_FILE_LOC:-/mnt/16m/pwd.txt}
-echo "creating $PWD_FILE_LOC file"
-touch $PWD_FILE_LOC 
-echo "$HOME" > $PWD_FILE_LOC
 
 # enable color support of ls and also add handy aliases
 echo "customizing some colors"
