@@ -59,6 +59,9 @@ Plug 'powerline/fonts'
 
 call plug#end()
 
+" setup clipboard according to the OS
+source ~/.config/nvim/init.clipboard.vim
+
 colorscheme gruvbox
 set termguicolors
 let g:gruvbox_italic=1
