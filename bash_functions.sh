@@ -11,3 +11,8 @@ function cdcustom() {
 alias cd=cdcustom
 
 source ~/.config/sh_scripts/find_replace
+
+alias show_line="printf -- '-%.0s' {2..$(tput cols)}; printf '\n'"
+function fix_time() {
+  echo "try running: 'sudo ntpdate ntp.ubuntu.com'"
+}
