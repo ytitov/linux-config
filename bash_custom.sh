@@ -3,9 +3,10 @@ echo "====== Running ~/.config/bash_custom.sh -======"
 
 #export XDG_CONFIG_HOME=~/.config
 DIRCOLORS=~/.config/dircolors.config
-echo "creating /mnt/16m/pwd file"
-touch /mnt/16m/pwd.txt
-echo "$HOME" > /mnt/16m/pwd.txt
+PWD_FILE_LOC=${PWD_FILE_LOC:-/mnt/16m/pwd.txt}
+echo "creating $PWD_FILE_LOC file"
+touch $PWD_FILE_LOC 
+echo "$HOME" > $PWD_FILE_LOC
 
 # enable color support of ls and also add handy aliases
 echo "customizing some colors"
@@ -33,7 +34,7 @@ fi
 
 # ALIASES #########################################
 echo "creating some aliases"
-alias gt="gnome-terminal --working-directory=$(cat /mnt/16m/pwd.txt)"
+alias gt="gnome-terminal --working-directory=$(cat $PWD_FILE_LOC)"
 alias get_master_vol="amixer -c 1 sget Master | awk -F\"[][]\" '/dB/ { print $2}'"
 alias ls="ls --color=auto --sort=extension --group-directories-first"
 
