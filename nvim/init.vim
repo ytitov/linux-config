@@ -131,6 +131,10 @@ let g:ale_lint_on_text_changed='never'
 let g:ale_lint_on_filetype_changed=0
 let g:ale_rust_cargo_check_tests=1
 let g:ale_set_highlights=0
+" let g:ale_linters={
+"   \  'rust': ['cargo', 'rustfmt'],
+"   \  'markdown': []
+"   \ }
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
