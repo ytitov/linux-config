@@ -65,7 +65,6 @@ export GIT_CONFIG=~/.config/.gitconfig
 #
 #echo 'dropbox starts ~/.dropbox-dist/dropboxd'
 #alias dropbox=~/.dropbox-dist/dropboxd
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
 #export JAVA_HOME=/usr/lib/jvm/java-13-openjdk
 PATH=$PATH:~/.config/sh_scripts/
 PATH="$HOME/.local/share/bin:$PATH"

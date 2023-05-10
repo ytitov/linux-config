@@ -47,7 +47,7 @@ Plug 'jparise/vim-graphql', { 'for': 'graphql' }
 Plug 'SidOfc/mkdx', { 'for': 'markdown' }
 
 " GENERIC ===========================================
-Plug 'dense-analysis/ale' 
+Plug 'dense-analysis/ale' ", { 'for': ['rust', 'python' ] } 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'powerline/powerline'
@@ -57,10 +57,19 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'morhetz/gruvbox'
 Plug 'powerline/fonts'
 
+Plug 'udalov/kotlin-vim', { 'for': ['kts', 'kt', 'kotlin'] }
+
+" :MasonUpdate updates registry contents
+Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 call plug#end()
 
 " setup clipboard according to the OS
 source ~/.config/nvim/init.clipboard.vim
+source ~/.config/nvim/lua/plugin.lua
 
 colorscheme gruvbox
 set termguicolors
@@ -91,7 +100,7 @@ omap <F12> <Esc>
 let g:ctrlp_working_path_mode = 'ra' " r is search from nearest ancestor (.git .svn etc)
 " let g:ctrlp_working_path_mode = 'w' " w is search from cwd 
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  'docs\|target\|node_modules\|\.(git|hg|svn)$',
+  \ 'dir':  'build\|docs\|target\|node_modules\|\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll|jar)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
