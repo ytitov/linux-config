@@ -129,9 +129,6 @@ autocmd FileType cpp ClandFormatAutoEnable
 " this is supposed to auto format on save but it doesnt do anything....
 autocmd FileType terraform let g:terraform_fmt_on_save=1
 
-" autoformat a json file just type :FormatJSON
-com! FmtJSON %!python -m json.tool
-
 set noic
 
 let g:ale_lint_on_enter=1
@@ -183,3 +180,26 @@ au BufRead,BufNewFile *.dart set filetype=dart
 let g:python3_host_prog = '/usr/bin/python3'
 
 :autocmd VimResized * wincmd =
+
+augroup xml
+    autocmd!
+    autocmd FileType xml let g:xml_syntax_folding=1
+    autocmd FileType xml :syntax on
+    autocmd FileType xml setlocal foldmethod=indent
+    autocmd FileType xml :%foldopen!
+augroup END
+
+augroup json
+    autocmd!
+    autocmd FileType json let g:xml_syntax_folding=1
+    autocmd FileType json :syntax on
+    autocmd FileType json setlocal foldmethod=syntax
+    autocmd FileType json :%foldopen!
+augroup END
+
+com! FmtJson %!python3 -m json.tool
+" this requires to `pip install sqlparse`
+" com! FmtSql %!python3 -m sqlparse --keywords upper -<CR>
+com! FmtSql %!sqlformat --reindent --keywords upper --identifiers lower -
+" com! FmtXML %!python -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())"
+com! FmtXML %!export XMLLINT_INDENT=$'\t'; xmllint --format --recover -

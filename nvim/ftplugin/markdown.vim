@@ -6,6 +6,7 @@ let b:ale_linters={
 autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
 " syntax highlighting in md
 let g:markdown_fenced_languages = ['sh', 'bash',
+  \ 'kotlin',
   \ 'javascript',
   \ 'xml', 'yaml', 'json', 'html',
   \ 'python', 'ruby', 'vim'

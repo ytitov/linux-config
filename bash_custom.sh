@@ -87,3 +87,5 @@ export XKB_DEFAULT_OPTIONS=caps:escape
 echo "wifi: nmtui/nm-connection-editor"
 echo "bluetooth: blueman-manager"
 echo "monitor settings: wdisplays"
+
+EDITOR=~/.local/bin/nvim
