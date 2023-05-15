@@ -25,12 +25,6 @@ Plug 'rust-lang/rust.vim', {'for': ['rust']}
 Plug 'cespare/vim-toml', {'for': ['toml']}
 Plug 'maralla/vim-toml-enhance', {'for': ['toml']}
 
-
-" PHP =================================================
-" Plug '2072/PHP-Indenting-for-VIm', { 'for': ['php'] }
-" Plug 'tobyS/pdv', { 'for': ['php'] }
-" Plug 'tobyS/vmustache', { 'for': ['php'] }
-
 " terraform files
 Plug 'hashivim/vim-terraform', { 'for': ['terraform'] }
 
@@ -64,6 +58,8 @@ Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+Plug 'mustache/vim-mustache-handlebars', { 'for': 'hbs' }
 
 call plug#end()
 
@@ -105,6 +101,16 @@ let g:ctrlp_custom_ignore = {
   \ 'link': 'some_bad_symbolic_links',
   \ }
 
+" setup undo
+set backup
+set backupdir=~/.vim/backups
+set hidden
+set undofile
+set undodir=~/.vim/undofiles
+set undolevels=1000
+set undoreload=1000
+
+
 " ctrl-n opens
 map <C-n> :NERDTreeToggle<CR>
 
@@ -119,6 +125,11 @@ set expandtab
 
 " enable true colors
 set termguicolors
+
+set list
+set listchars=tab:·>
+set conceallevel=1
+set autoindent
 
 " cformat auto:
 autocmd FileType cpp ClandFormatAutoEnable
@@ -150,32 +161,15 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 "   autocmd BufNewFile,BufRead *.php set formatprg=php-formatter
 " augroup end
 
-" javascript =================================================================
-" vim-javascript
-let g:javascript_plugin_jsdoc=1
-"set foldmethod=syntax
-let g:javascript_conceal_function             = "ƒ"
-let g:javascript_conceal_arrow_function       = "⇒"
-let g:javascript_conceal_null                 = "ø"
-let g:javascript_conceal_NaN                  = "ℕ"
-set conceallevel=1
-" deplete for javascript
-let g:deoplete#enable_at_startup = 1
-" tern
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#filetypes = [
-                \ 'jsx',
-                \ 'javascript.jsx',
-                \ ]
-" Use tern_for_vim.
-autocmd FileType js g:tern#command = ["tern"]
-autocmd FileType js g:tern#arguments = ["--persistent"]
 "autocmd BufWritePre *.jsx call JsxBeautify()
 "autocmd BufWritePre *.js call JsBeautify()
 autocmd BufWritePre *.html call HtmlBeautify()
 
 " set filetype to dart
 au BufRead,BufNewFile *.dart set filetype=dart
+
+au BufRead,BufNewFile *.js set filetype=javascript
+au BufRead,BufNewFile *.jsx set filetype=javascript.jsx
 
 let g:python3_host_prog = '/usr/bin/python3'
 
@@ -189,17 +183,16 @@ augroup xml
     autocmd FileType xml :%foldopen!
 augroup END
 
-augroup json
-    autocmd!
-    autocmd FileType json let g:xml_syntax_folding=1
-    autocmd FileType json :syntax on
-    autocmd FileType json setlocal foldmethod=syntax
-    autocmd FileType json :%foldopen!
-augroup END
-
-com! FmtJson %!python3 -m json.tool
 " this requires to `pip install sqlparse`
 " com! FmtSql %!python3 -m sqlparse --keywords upper -<CR>
 com! FmtSql %!sqlformat --reindent --keywords upper --identifiers lower -
 " com! FmtXML %!python -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())"
 com! FmtXML %!export XMLLINT_INDENT=$'\t'; xmllint --format --recover -
+
+" for trying to figure out why vim is being slow
+""" :profile start profile.log
+""" :profile func *
+""" :profile file *
+""" " At this point do slow actions
+""" :profile pause
+""" :noautocmd qall!
