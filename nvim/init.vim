@@ -63,6 +63,9 @@ Plug 'mustache/vim-mustache-handlebars', { 'for': 'hbs' }
 
 call plug#end()
 
+set ff=unix
+set ffs=unix
+
 " setup clipboard according to the OS
 source ~/.config/nvim/init.clipboard.vim
 source ~/.config/nvim/lua/plugin.lua
@@ -148,10 +151,16 @@ let g:ale_lint_on_text_changed='never'
 let g:ale_lint_on_filetype_changed=0
 let g:ale_rust_cargo_check_tests=1
 let g:ale_set_highlights=0
+let g:ale_completion_enabled=0 " because using deoplete
 " let g:ale_linters={
 "   \  'rust': ['cargo', 'rustfmt'],
 "   \  'markdown': []
 "   \ }
+let g:ale_linters={
+  \  'sh': []
+  \  ,'kotlin': []
+  \  ,'java': []
+  \ }
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
@@ -189,6 +198,8 @@ com! FmtSql %!sqlformat --reindent --keywords upper --identifiers lower -
 " com! FmtXML %!python -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())"
 com! FmtXML %!export XMLLINT_INDENT=$'\t'; xmllint --format --recover -
 
+let g:deoplete#enable_at_startup = 1
+
 " for trying to figure out why vim is being slow
 """ :profile start profile.log
 """ :profile func *
@@ -196,3 +207,4 @@ com! FmtXML %!export XMLLINT_INDENT=$'\t'; xmllint --format --recover -
 """ " At this point do slow actions
 """ :profile pause
 """ :noautocmd qall!
+set concealcursor=""

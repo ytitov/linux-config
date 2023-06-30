@@ -1,0 +1,55 @@
+#!/bin/bash
+#      -V mainfont="LatinModernRoman" \
+#      -V monofont="LatinModernMono" \
+function md-to-pdf() {
+  INPUT_FILENAME=$1
+  if [ -z $INPUT_FILENAME ]
+  then
+    echo "You must provide an input filename and an output filename.  Usage:"
+    echo "md-to-pdf INPUT_FILENAME TITLE OUTPUT_DIR"
+  else 
+    TITLE=${2:-Title Not Set}
+    OUTPUT_DIR=${4:-$(pwd)}
+    OUTPUT_FORMAT=${3:-pdf}
+    OUTPUT_FILENAME=$INPUT_FILENAME.$OUTPUT_FORMAT
+    echo "md-to-pdf: \
+      INPUT_FILENAME: $INPUT_FILENAME\
+      OUTPUT_DIR: $OUTPUT_DIR\
+      TITLE: $TITLE\
+      OUTPUT_FORMAT: $OUTPUT_FORMAT\
+      Output: $OUTPUT_FILENAME.$OUTPUT_FORMAT
+      "
+    docker run --rm -v $OUTPUT_DIR:/data \
+      -u $(id -u):$(id -g) mypandoc:latest \
+      --from=markdown --toc -V title:$TITLE \
+      --pdf-engine=lualatex \
+      -V geometry:margin=0.75in $INPUT_FILENAME \
+      -o $OUTPUT_FILENAME
+  fi
+}
+
+function md-to-pdf-test() {
+  INPUT_FILENAME=$1
+  if [ -z $INPUT_FILENAME ]
+  then
+    echo "You must provide an input filename and an output filename.  Usage:"
+    echo "md-to-pdf INPUT_FILENAME TITLE OUTPUT_DIR"
+  else 
+    TITLE=${2:-Title Not Set}
+    OUTPUT_DIR=${4:-$(pwd)}
+    OUTPUT_FORMAT=${3:-pdf}
+    OUTPUT_FILENAME=$INPUT_FILENAME.$OUTPUT_FORMAT
+    echo "md-to-pdf: \
+      INPUT_FILENAME: $INPUT_FILENAME\
+      OUTPUT_DIR: $OUTPUT_DIR\
+      TITLE: $TITLE\
+      OUTPUT_FORMAT: $OUTPUT_FORMAT\
+      Output: $OUTPUT_FILENAME.$OUTPUT_FORMAT
+      "
+    docker run --rm -v $OUTPUT_DIR:/data \
+      -u $(id -u):$(id -g) mypandoc:latest \
+      -s $INPUT_FILENAME \
+      -o $OUTPUT_FILENAME.$OUTPUT_FORMAT \
+      --verbose
+  fi
+}

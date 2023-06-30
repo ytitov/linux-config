@@ -1,5 +1,7 @@
 #!/bin/bash
-echo "====== Running ~/.config/bash_custom.sh -======"
+source ~/.config/bash_functions.sh
+
+show_line_with_title "Running ~/.config/bash_custom.sh"
 
 #export XDG_CONFIG_HOME=~/.config
 DIRCOLORS=~/.config/dircolors.config
@@ -18,25 +20,27 @@ if [ -x /usr/bin/dircolors ]; then
   alias fgrep='fgrep --color=auto'
   alias egrep='egrep --color=auto'
 
-    # Run in a subshell so it won't crash current color settings
-    dircolors -b >/dev/null
-    IFS=:
-    for ls_color in ${LS_COLORS[@]}; do # For all colors
-        color=${ls_color##*=}
-        ext=${ls_color%%=*}
-        echo -en "\E[${color}m${ext}\E[0m " # echo color and extension
-    done
-    echo
+  echo "COLORS: $LS_COLORS"
+
+  # Run in a subshell so it won't crash current color settings
+  dircolors -b >/dev/null
+
+  for i in $(echo $LS_COLORS | tr ":" "\n")
+  do
+    color=${i##*=}
+    ext=${i%%=*}
+    echo -en "\e[${color}m${ext}\e[0m\n" # echo color and extension
+  done
+
 fi
 
 # ALIASES #########################################
-echo "creating some aliases"
+show_line_with_title "creating some aliases"
 alias gt="gnome-terminal --working-directory=$(cat $PWD_FILE_LOC)"
 alias get_master_vol="amixer -c 1 sget Master | awk -F\"[][]\" '/dB/ { print $2}'"
 alias ls="ls --color=auto --sort=extension --group-directories-first"
 
-source ~/.config/bash_functions.sh
-export GIT_CONFIG=~/.config/.gitconfig
+# export GIT_CONFIG=~/.config/.gitconfig
 
 #source ~/.config/bash_docker_completion.sh
 
@@ -89,3 +93,11 @@ echo "bluetooth: blueman-manager"
 echo "monitor settings: wdisplays"
 
 EDITOR=~/.local/bin/nvim
+
+show_line_with_title "Sourcing bash-setup* scripts"
+
+for f in ~/.config/bash-setup*
+do
+  echo "Processing $f"
+  source $f
+done
