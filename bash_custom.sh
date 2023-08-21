@@ -7,6 +7,37 @@ show_line_with_title "Running ~/.config/bash_custom.sh"
 DIRCOLORS=~/.config/dircolors.config
 PWD_FILE_LOC=${PWD_FILE_LOC:-/mnt/16m/pwd.txt}
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+function info_msg() {
+  a=${@}
+  local word=$2
+  local color=$GREEN
+  if [ ${#a} -gt 2 ];
+  then
+    color=$1
+    shift
+    shift
+    echo "[${color}$word${NC}]: $@"
+  else 
+    echo "$RED ERROR: $NC This requires 2+ arguments"
+  fi
+}
+
+function msg_err() {
+  info_msg $RED $@
+}
+
+function msg_info() {
+  info_msg $BLUE $@
+}
+
+function msg_ok() {
+  info_msg $GREEN $@
+}
+
 # enable color support of ls and also add handy aliases
 echo "customizing some colors"
 if [ -x /usr/bin/dircolors ]; then
