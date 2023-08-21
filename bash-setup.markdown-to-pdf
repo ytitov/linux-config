@@ -2,6 +2,7 @@
 #      -V mainfont="LatinModernRoman" \
 #      -V monofont="LatinModernMono" \
 function md-to-pdf() {
+  echo $HEADER
   INPUT_FILENAME=$1
   if [ -z $INPUT_FILENAME ]
   then
@@ -21,6 +22,7 @@ function md-to-pdf() {
       "
     docker run --rm -v $OUTPUT_DIR:/data \
       -u $(id -u):$(id -g) mypandoc:latest \
+      --lua-filter /filters/lua-filters/filters/diagram-generator.lua \
       --from=markdown --toc -V title:$TITLE \
       --pdf-engine=lualatex \
       -V geometry:margin=0.75in $INPUT_FILENAME \

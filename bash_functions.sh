@@ -40,6 +40,13 @@ function show_line_with_title() {
   printf '\n'
 }
 
+show_line_with_title "Run du_matching_files [word] to get cumulative size"
+function du_matching_files() {
+  local M=${1:-target}
+  find . -path "*$M*" -type f -print0 | du -ch --files0-from=-
+  echo 'To remove use: find . -path "*target/debug*" -exec rm -rf {} +'
+}
+
 function fix_time() {
   echo "try running: 'sudo ntpdate ntp.ubuntu.com'"
 }

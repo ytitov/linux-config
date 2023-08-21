@@ -1,6 +1,6 @@
 call plug#begin('$HOME/.local/share/nvim/plugged')
 " javascript ================================================
-"Plug 'maksimr/vim-jsbeautify', {'for': ['javascript', 'javascript.jsx', 'html', 'css', 'json']}
+Plug 'maksimr/vim-jsbeautify', {'for': ['javascript', 'javascript.jsx', 'html', 'css', 'json']}
 Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
 Plug 'mxw/vim-jsx', {'for': ['javascript.jsx']}
 Plug 'posva/vim-vue', {'for': ['vue']}
@@ -21,7 +21,7 @@ Plug 'tpope/vim-dotenv', {'for': ['dotenv']}
 Plug 'dart-lang/dart-vim-plugin', {'for' :['dart']}
 
 " rust =======================================
-Plug 'rust-lang/rust.vim', {'for': ['rust']}
+" Plug 'rust-lang/rust.vim', {'for': ['rust']}
 Plug 'cespare/vim-toml', {'for': ['toml']}
 Plug 'maralla/vim-toml-enhance', {'for': ['toml']}
 
@@ -39,6 +39,7 @@ Plug 'jparise/vim-graphql', { 'for': 'graphql' }
 
 " markdown =====================================
 Plug 'SidOfc/mkdx', { 'for': 'markdown' }
+
 
 " GENERIC ===========================================
 Plug 'dense-analysis/ale' ", { 'for': ['rust', 'python' ] } 
@@ -121,6 +122,7 @@ map <C-n> :NERDTreeToggle<CR>
 filetype plugin indent on
 " show existing tab with 2 spaces width
 set tabstop=2
+set softtabstop=2
 " " when indenting with '>', use 2 spaces width
 set shiftwidth=2
 " " On pressing tab, insert 2 spaces
@@ -152,12 +154,10 @@ let g:ale_lint_on_filetype_changed=0
 let g:ale_rust_cargo_check_tests=1
 let g:ale_set_highlights=0
 let g:ale_completion_enabled=0 " because using deoplete
-" let g:ale_linters={
-"   \  'rust': ['cargo', 'rustfmt'],
-"   \  'markdown': []
-"   \ }
 let g:ale_linters={
-  \  'sh': []
+  \  'rust': ['cargo', 'fmt']
+  \  ,'markdown': []
+  \  ,'sh': []
   \  ,'kotlin': []
   \  ,'java': []
   \ }
@@ -171,7 +171,7 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " augroup end
 
 "autocmd BufWritePre *.jsx call JsxBeautify()
-"autocmd BufWritePre *.js call JsBeautify()
+autocmd BufWritePre *.js call JsBeautify()
 autocmd BufWritePre *.html call HtmlBeautify()
 
 " set filetype to dart
@@ -197,6 +197,7 @@ augroup END
 com! FmtSql %!sqlformat --reindent --keywords upper --identifiers lower -
 " com! FmtXML %!python -c "import xml.dom.minidom, sys; print(xml.dom.minidom.parse(sys.stdin).toprettyxml())"
 com! FmtXML %!export XMLLINT_INDENT=$'\t'; xmllint --format --recover -
+com! FmtJson %!python3 -m json.tool
 
 let g:deoplete#enable_at_startup = 1
 

@@ -20,8 +20,6 @@ if [ -x /usr/bin/dircolors ]; then
   alias fgrep='fgrep --color=auto'
   alias egrep='egrep --color=auto'
 
-  echo "COLORS: $LS_COLORS"
-
   # Run in a subshell so it won't crash current color settings
   dircolors -b >/dev/null
 
@@ -84,8 +82,12 @@ export PATH="$HOME/flutter/bin:$PATH"
 # detect the timezone
 #tzupdate -p
 #source /usr/share/git/completion/git-completion.bash
-echo "Writing the list of installed packages to ~/.config/installed_packages.txt"
-LC_ALL=C pacman -Qi | awk '/^Name/{name=$3} /^Installed Size/{print $4$5, name}' | sort -h > ~/.config/installed_packages.txt
+if command -v pacman &> /dev/null
+then
+    echo "Writing the list of installed packages to ~/.config/installed_packages.txt"
+    LC_ALL=C pacman -Qi | awk '/^Name/{name=$3} /^Installed Size/{print $4$5, name}' | sort -h > ~/.config/installed_packages.txt
+fi
+
 # for sway rempap esc to caps
 export XKB_DEFAULT_OPTIONS=caps:escape
 echo "wifi: nmtui/nm-connection-editor"
