@@ -209,3 +209,5 @@ let g:deoplete#enable_at_startup = 1
 """ :profile pause
 """ :noautocmd qall!
 set concealcursor=""
+
+command! UnwrapSqsNotification :%s/\\"/"/g | :%s/\\n/\r/g | %s/\\"/"/g | %s/\\"/"/g | %s/"{/{/g | %s/}"/}/g

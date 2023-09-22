@@ -30,6 +30,35 @@ function md-to-pdf() {
   fi
 }
 
+function md-to-pdf-recursive() {
+  local WORKDIR=${1:-$PWD}
+  echo "WORKDIR: $WORKDIR"
+  local temp_readme_file="temp_readme_file.txt"
+  echo "" > $temp_readme_file
+  for mdfile in $WORKDIR/**/*.md; do
+    # check for gitignore if applicable
+    if [[ -d $WORKDIR/.git ]]; then
+      git check-ignore --quiet $mdfile
+      local exitstatus=$?
+      if [ $exitstatus -ne 0 ]; then
+        msg_ok "ADDING" "$mdfile"
+        echo '\n\\newpage\n' >> $temp_readme_file
+        cat $mdfile >> $temp_readme_file
+      else
+        msg_info "SKIP" "$mdfile"
+      fi
+    else
+      msg_ok "ADDING" "$mdfile"
+      echo '\n\\newpage\n' >> $temp_readme_file
+      cat $mdfile >> $temp_readme_file
+    fi
+  done
+  cat $temp_readme_file
+  mv $temp_readme_file $temp_readme_file.md
+  md-to-pdf $temp_readme_file.md
+  rm $temp_readme_file.md
+}
+
 function md-to-pdf-test() {
   INPUT_FILENAME=$1
   if [ -z $INPUT_FILENAME ]
