@@ -38,6 +38,12 @@ function msg_ok() {
   info_msg $GREEN $@
 }
 
+function get_user_input() {
+  tempfile=${1:-$(date +%s).md}
+  nvim $tempfile
+  echo $tempfile
+}
+
 # enable color support of ls and also add handy aliases
 echo "customizing some colors"
 if [ -x /usr/bin/dircolors ]; then
@@ -131,6 +137,6 @@ show_line_with_title "Sourcing bash-setup* scripts"
 
 for f in ~/.config/bash-setup*
 do
-  echo "Processing $f"
+  show_line_with_title "Processing $f"
   source $f
 done

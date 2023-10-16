@@ -1,0 +1,10 @@
+if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
+  msg_info note detected wsl and running some extras
+  msg_info "launch alacritty" "alacr [window name]"
+  function alacr() {
+    alacritty.exe -T "$1"&
+  }
+fi
+
+
+

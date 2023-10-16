@@ -52,3 +52,11 @@ function fix_time() {
 }
 
 show_line_with_title "Sourced bash_functions.sh"
+
+function get-user-input() {
+  filetype=${1:-md}
+  timestamp=$(date +%s)
+  tempfile="$timestamp.$filetype"
+  nvim $tempfile
+  echo $tempfile
+}
