@@ -18,22 +18,42 @@ function md-to-pdf() {
       OUTPUT_DIR: $OUTPUT_DIR\
       TITLE: $TITLE\
       OUTPUT_FORMAT: $OUTPUT_FORMAT\
-      Output: $OUTPUT_FILENAME.$OUTPUT_FORMAT
+      Output: $OUTPUT_FILENAME
       "
     docker run --rm -v $OUTPUT_DIR:/data \
       -u $(id -u):$(id -g) mypandoc:latest \
       --lua-filter /filters/lua-filters/filters/diagram-generator.lua \
       --from=markdown --toc -V title:$TITLE \
+      -N --variable fontsize=10pt \
       --pdf-engine=lualatex \
-      -V geometry:margin=0.75in $INPUT_FILENAME \
+      -V geometry:top=0.4in \
+      -V geometry:left=0.3in \
+      -V geometry:right=0.3in \
+      -V geometry:bottom=0.3in \
+      $INPUT_FILENAME \
       -o $OUTPUT_FILENAME
   fi
 }
 
+function md-to-pdf-recursive-util() {
+  local project_path=$1
+  local project_folder_name=$2
+  local mdfile=$3
+  local temp_readme_file=$4
+  local inner_path="${mdfile/$project_path/""}"
+  msg_ok "ADDING" "$mdfile"
+  if [[ "$(dirname $mdfile)" = "$project_folder_name" ]]; then
+    echo '\n\\newpage\n' >> $temp_readme_file
+  else
+    echo '\n\\newpage\n' >> $temp_readme_file
+    echo "# "'`'"$inner_path"'`\n' >> $temp_readme_file
+  fi
+}
 function md-to-pdf-recursive() {
   local WORKDIR=${1:-$PWD}
+  local FOLDER_NAME=$(basename $WORKDIR)
   echo "WORKDIR: $WORKDIR"
-  local temp_readme_file="temp_readme_file.txt"
+  local temp_readme_file="temp_readme_file"
   echo "" > $temp_readme_file
   for mdfile in $WORKDIR/**/*.md; do
     # check for gitignore if applicable
@@ -42,21 +62,22 @@ function md-to-pdf-recursive() {
       local exitstatus=$?
       if [ $exitstatus -ne 0 ]; then
         msg_ok "ADDING" "$mdfile"
-        echo '\n\\newpage\n' >> $temp_readme_file
+        md-to-pdf-recursive-util $WORKDIR $FOLDER_NAME $mdfile $temp_readme_file
         cat $mdfile >> $temp_readme_file
       else
         msg_info "SKIP" "$mdfile"
       fi
     else
       msg_ok "ADDING" "$mdfile"
-      echo '\n\\newpage\n' >> $temp_readme_file
+      md-to-pdf-recursive-util $WORKDIR $FOLDER_NAME $mdfile $temp_readme_file
       cat $mdfile >> $temp_readme_file
     fi
   done
   cat $temp_readme_file
-  mv $temp_readme_file $temp_readme_file.md
-  md-to-pdf $temp_readme_file.md
-  rm $temp_readme_file.md
+  mv $temp_readme_file $temp_readme_file
+  md-to-pdf $temp_readme_file
+  rm $temp_readme_file
+  msg_info $temp_readme_file.pdf is your file
 }
 
 function md-to-pdf-test() {

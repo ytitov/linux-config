@@ -4,6 +4,12 @@ if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
   function alacr() {
     alacritty.exe -T "$1"&
   }
+  function view-pdf() {
+    local FILE='file://///wsl.localhost/Ubuntu'
+    local f="$FILE$(realpath $1)"
+    echo "Opening url: $f"
+    firefox.exe -new-window $f
+  }
 fi
 
 
