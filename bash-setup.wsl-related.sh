@@ -4,6 +4,7 @@ if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
   function alacr() {
     alacritty.exe -T "$1"&
   }
+  msg_info "view-pdf" "view-pdf [file]"
   function view-pdf() {
     local FILE='file://///wsl.localhost/Ubuntu'
     local f="$FILE$(realpath $1)"
