@@ -21,6 +21,7 @@ function md-to-pdf() {
       Output: $OUTPUT_FILENAME
       "
     docker run --rm -v $OUTPUT_DIR:/data \
+      --workdir /data \
       -u $(id -u):$(id -g) mypandoc:latest \
       --lua-filter /filters/lua-filters/filters/diagram-generator.lua \
       --from=markdown --toc -V title:$TITLE \

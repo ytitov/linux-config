@@ -1,8 +1,12 @@
 #!/bin/python3
+# data model reference
+# https://learn.microsoft.com/en-us/azure/devops/boards/work-items/guidance/work-item-field?view=azure-devops
 from enum import Enum
 import asyncio
 import argparse
 import yaml
+import subprocess as sp
+from datetime import datetime, timezone
 
 class Command(Enum):
     info = 'info'
@@ -25,22 +29,27 @@ class Team(Enum):
             case Team.empi:
                 return "NinjaCat\Data (Glue)\Team Consumer"
             case Team.mesh:
-                pass
+                return "NinjaCat\Platform (Mesh)"
             case Team.glue:
                 return "NinjaCat\Data (Glue)"
 
 p = argparse.ArgumentParser()
 p.add_argument('command', type=Command, choices=list(Command), \
         help="""
+to log into azure: 'az login --use-device-code'
 info: show some info
 view-issues: view some issues
 """)
 p.add_argument("--team", type=Team, choices=list(Team), help="Which team")
+p.add_argument("--title", type=str, help="Title of the issue when creating")
+p.add_argument("--task-type", type=str, default="User Story", help="The type of the work item")
+p.add_argument("--project", type=str, default="62397e06-cdac-4061-bd54-92034cfb596c", help="Leave this alone unless making an issue somewhere very odd")
+p.add_argument("--org", type=str, default="https://dev.azure.com/healthcatalyst", help="Organization")
 
 args = p.parse_args()
 
 # -------------
-async def read_pipe(name, pipe, show = True):
+async def read_pipe(name, pipe, show = False):
     r = ""
     while True:
         #buf = await pipe.read(10)
@@ -50,17 +59,15 @@ async def read_pipe(name, pipe, show = True):
         s = buf.decode().strip()
         r += s
         if show is True:
-            print(f'{name}: {s}')
-    if show is True:
-        print(f'{name}: END')
+            print(f'{name}{s}')
     return r
 
-async def run_cmd_async(cmd: str, commands):
+async def run_cmd_async(cmd: str, commands, show = False):
     proc = await asyncio.create_subprocess_exec(cmd, *commands, \
         stdin=asyncio.subprocess.PIPE, \
         stdout=asyncio.subprocess.PIPE, \
         stderr=asyncio.subprocess.PIPE) 
-    [return_code, std_out, std_err] = await asyncio.gather(proc.wait(), read_pipe("az:0", proc.stdout), read_pipe("az:1", proc.stderr))
+    [return_code, std_out, std_err] = await asyncio.gather(proc.wait(), read_pipe("", proc.stdout, show = show), read_pipe("# Err: ", proc.stderr, show = show))
     return Results(std_out, std_err, return_code)
 
 # -------------
@@ -76,18 +83,40 @@ class Results(object):
         self.return_code = return_code
 
     def show_fields(self):
+        if self.return_code != 0:
+            print("There was an error running the command: ")
+            print(f"-------:\n{self.std_err}\n-------")
         data = yaml.load(self.std_out, Loader = yaml.Loader)
         #output = yaml.dump(data, Dumper=yaml.Dumper)
         #return output
-        print(data)
-        for elem in data:
-            self.show_element(elem)
+        #print(data)
+        num = 0
+        if data is not None:
+            for elem in data:
+                num += 1
+                self.show_element(elem)
+            print(f"# Number of items returned: {num}")
+        else:
+            print(f"# No data returned: {data}")
 
     def show_element(self, elem):
+        print(elem)
+        fields = elem.get('fields')
+        match fields:
+            case {"System.AssignedTo": {"uniqueName": s}}:
+                fields['System.AssignedTo'] = s
+            case _:
+                pass
+        match fields:
+            case {"System.CreatedBy": {"uniqueName": s}}:
+                fields['System.CreatedBy'] = s
+            case _:
+                pass
+        issue_title = fields.get('System.Title')
         output = yaml.dump(elem, Dumper=yaml.Dumper)
         print(f"""
----- element ----
-              {output}""")
+# {issue_title}
+{output}""")
 
     def to_yaml_str(self):
         data = yaml.load(self.std_out, Loader = yaml.Loader)
@@ -95,16 +124,21 @@ class Results(object):
         return output
 
 class Queries:
+    select = ""
     def trailing_cmds():
         return ["--org", "https://dev.azure.com/healthcatalyst"]
 
     def search_active():
         return "SELECT [System.Id], [System.Title], [System.AssignedTo], [System.State], [System.AreaPath], [System.IterationPath], [System.Tags], [System.CommentCount] FROM workitems WHERE [System.State] IN ('Active') ORDER BY [System.IterationPath]"
 
-    def search_active_in_team(team: Team):
+    def search_in_team(team: Team, is_active = False):
         area_path = team.area_path()
-        print(f" searcing in team {team}, path: {area_path}")
-        return f"SELECT [System.Id], [System.Title], [System.AssignedTo], [System.State], [System.AreaPath], [System.IterationPath], [System.Tags], [System.CommentCount] FROM workitems WHERE [System.AreaPath] IN ('{area_path}') AND [System.State] IN ('Active') ORDER BY [System.IterationPath]"
+        is_active_query = "AND [System.State] NOT IN ('Closed', 'Resolved')"
+        if is_active is True:
+            is_active_query = "AND [System.State] IN ('Active')"
+        print(f"team: {team}")
+        print(f"area_path: {area_path}")
+        return f"SELECT [System.WorkItemType], [System.TeamProject], [System.Id], [System.CreatedDate], [System.Title], [System.AssignedTo], [System.State], [System.AreaPath], [System.IterationPath], [System.Tags], [System.CreatedBy], [System.BoardColumn] FROM workitems WHERE [System.AreaPath] IN ('{area_path}') {is_active_query} ORDER BY [System.CreatedDate]"
     
 
 async def main():
@@ -116,9 +150,30 @@ async def main():
 
         case Command.create_issue:
             print(f"Create an issue for {args.team}");
+            if args.title is None or args.team is None:
+                print("You must supply a title and team to create issue")
+                exit(1)
+            # az boards work-item create --title ... --area ... --description ... 
+            area_path = args.team.area_path()
+            now = datetime.now(timezone.utc)
+            s = now.isoformat()
+            filename = f"ado-issue-{args.team}-{s}.md"
+
+            print(f"Creating issue content: {filename}")
+            sp.run(['nvim', filename])
+            with open(filename, 'r') as f:
+                content = f.read().strip()
+                print(content)
+                #f"--area='{area_path}'",
+                az_boards_create_cmd = ["boards", "work-item", "create", f"--project=\"{args.project}\"", f"--type=\"{args.task_type}\"", f"--area=\"{area_path}\"", f"--iteration=\"NinjaCat\Data (Glue)\"", f"--title=\"{args.title}\"",  f"--description=\"{content}\"", "--debug"]
+                print(f"Running command: {az_boards_create_cmd}")
+                r = await run_cmd_async("az", az_boards_create_cmd + Queries.trailing_cmds())
+                r.show_fields()
+            sp.run(['rm', filename])
+
 
         case Command.view_issues:
-            r = await run_cmd_async("az", ["boards", "query", "--wiql", Queries.search_active_in_team(args.team)] + Queries.trailing_cmds())
+            r = await run_cmd_async("az", ["boards", "query", "--wiql", Queries.search_in_team(args.team)] + Queries.trailing_cmds())
             r.show_fields()
         
 asyncio.run(main())
