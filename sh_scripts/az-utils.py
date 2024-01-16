@@ -40,7 +40,7 @@ to log into azure: 'az login --use-device-code'
 info: show some info
 view-issues: view some issues
 """)
-p.add_argument("--team", type=Team, choices=list(Team), help="Which team")
+p.add_argument("--team", type=Team, choices=list(Team), help="Which team", default="empi")
 p.add_argument("--title", type=str, help="Title of the issue when creating")
 p.add_argument("--task-type", type=str, default="User Story", help="The type of the work item")
 p.add_argument("--project", type=str, default="62397e06-cdac-4061-bd54-92034cfb596c", help="Leave this alone unless making an issue somewhere very odd")
@@ -173,6 +173,7 @@ async def main():
 
 
         case Command.view_issues:
+            print(f"running args {args}")
             r = await run_cmd_async("az", ["boards", "query", "--wiql", Queries.search_in_team(args.team)] + Queries.trailing_cmds())
             r.show_fields()
         
