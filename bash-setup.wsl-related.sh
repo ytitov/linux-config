@@ -2,6 +2,7 @@ if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
   msg_info "note" "detected wsl and running some extras"
   msg_info "alacritty config location" "/mnt/c/Users/YuriyTitov/AppData/Roaming/alacritty/alacritty.yml"
   msg_info "launch alacritty" "alacr [window name]"
+  msg_info "wsl hostname" "$(wsl.exe hostname -I)"
   function alacr() {
     alacritty.exe -T "$1"&
   }

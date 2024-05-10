@@ -2,37 +2,58 @@
 #      -V mainfont="LatinModernRoman" \
 #      -V monofont="LatinModernMono" \
 function md-to-pdf() {
+  env_file="$(pwd)/.env"
+  if test -f $env_file; then
+    source $env_file
+  fi
   echo $HEADER
   INPUT_FILENAME=$1
+  echo "CWD: $(pwd)"
   if [ -z $INPUT_FILENAME ]
   then
     echo "You must provide an input filename and an output filename.  Usage:"
     echo "md-to-pdf INPUT_FILENAME TITLE OUTPUT_DIR"
   else 
-    TITLE=${2:-Title Not Set}
+    ########TITLE=${2:""}
+    extra=()
+    if [ -z "$2" ]; then
+      echo "No Title Set"
+    else
+      extra+=( '-V title:')
+      extra+=($2)
+    fi
     OUTPUT_DIR=${4:-$(pwd)}
     OUTPUT_FORMAT=${3:-pdf}
     OUTPUT_FILENAME=$INPUT_FILENAME.$OUTPUT_FORMAT
     echo "md-to-pdf: \
-      INPUT_FILENAME: $INPUT_FILENAME\
-      OUTPUT_DIR: $OUTPUT_DIR\
-      TITLE: $TITLE\
-      OUTPUT_FORMAT: $OUTPUT_FORMAT\
-      Output: $OUTPUT_FILENAME
-      "
+      \nINPUT_FILENAME: $INPUT_FILENAME\
+      \nOUTPUT_DIR: $OUTPUT_DIR\
+      \nTITLE: $TITLE\
+      \nOUTPUT_FORMAT: $OUTPUT_FORMAT\
+      \nOutput: $OUTPUT_FILENAME\
+      \n Extra params: ${extra[@]}"
     docker run --rm -v $OUTPUT_DIR:/data \
       --workdir /data \
       -u $(id -u):$(id -g) mypandoc:latest \
       --lua-filter /filters/lua-filters/filters/diagram-generator.lua \
-      --from=markdown --toc -V title:$TITLE \
+      --from=markdown --toc \
       -N --variable fontsize=10pt \
       --pdf-engine=lualatex \
       -V geometry:top=0.4in \
       -V geometry:left=0.3in \
       -V geometry:right=0.3in \
       -V geometry:bottom=0.3in \
-      $INPUT_FILENAME \
+      "${extra[@]}" $INPUT_FILENAME \
       -o $OUTPUT_FILENAME
+    if [ -z $OUTPUT_MD_FOLDER ]
+    then
+      echo "Your output file is: $(pwd)/$OUTPUT_FILENAME"
+    else
+      echo "Moving file to requested folder: $OUTPUT_FILENAME to $OUTPUT_MD_FOLDER/$OUTPUT_FILENAME"
+      echo "Copying source markdown: $INPUT_FILENAME to $OUTPUT_MD_FOLDER/$(basename $INPUT_FILENAME)"
+      cp $INPUT_FILENAME $OUTPUT_MD_FOLDER/$(basename $INPUT_FILENAME)
+      mv $OUTPUT_FILENAME $OUTPUT_MD_FOLDER/$OUTPUT_FILENAME
+    fi
   fi
 }
 

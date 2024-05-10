@@ -46,6 +46,10 @@ p.add_argument("--task-type", type=str, default="User Story", help="The type of 
 p.add_argument("--project", type=str, default="62397e06-cdac-4061-bd54-92034cfb596c", help="Leave this alone unless making an issue somewhere very odd")
 p.add_argument("--org", type=str, default="https://dev.azure.com/healthcatalyst", help="Organization")
 
+# list all connections
+# az devops service-endpoint list --org="https://dev.azure.com/healthcatalyst" --project="62397e06-cdac-4061-bd54-92034cfb596c"
+# show the deisred connection
+#  az devops service-endpoint show --id="f0484d81-e169-4382-9dab-87de19fba7e4" --org="https://dev.azure.com/healthcatalyst" --project="62397e06-cdac-4061-bd54-92034cfb596c"
 args = p.parse_args()
 
 # -------------

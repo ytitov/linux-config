@@ -15,12 +15,12 @@ function frontail-log() {
 
 msg_info "clean-target-folders-recursively" 'delete all "target" subfolders'
 function clean-target-folders-recursively() {
-  F=$1
+  F=${1:-target}
 
   msg_err "About to delete some files" "Ctrl-C to get out; any key to continue"
   read  -n 1
 
-  for p in **/target;
+  for p in **/$F;
   do
     folder_name=$(basename $p)
     echo $folder_name
