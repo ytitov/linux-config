@@ -1,12 +1,13 @@
 call plug#begin('$HOME/.local/share/nvim/plugged')
 " javascript ================================================
-Plug 'maksimr/vim-jsbeautify', {'for': ['javascript', 'javascript.jsx', 'html', 'css', 'json']}
-Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
-Plug 'mxw/vim-jsx', {'for': ['javascript.jsx']}
-Plug 'posva/vim-vue', {'for': ['vue']}
+" Plug 'maksimr/vim-jsbeautify', {'for': ['javascript', 'javascript.jsx', 'html', 'css', 'json']}
+Plug 'maksimr/vim-jsbeautify', {'for': ['html', 'css', 'json']}
+" Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascript.jsx']}
+" Plug 'mxw/vim-jsx', {'for': ['javascript.jsx']}
+" Plug 'posva/vim-vue', {'for': ['vue']}
 Plug 'leafgarland/typescript-vim', {'for': ['ts']}
 Plug  'peitalin/vim-jsx-typescript', {'for': ['typescriptreact']}
-Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx', 'ts', 'typescriptreact', 'vue'], 'do': 'npm install -g tern' }
+" Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx', 'ts', 'typescriptreact', 'vue'], 'do': 'npm install -g tern' }
 " vim-jsx-improve doesnt work with vim-jsx
 "Plug 'neoclide/vim-jsx-improve', {'for': ['javascript.jsx']}
 
@@ -38,7 +39,10 @@ Plug 'jparise/vim-graphql', { 'for': 'graphql' }
 " Plug '~/.config/nvim/myplugins/myphp', { 'for': ['php'] }
 
 " markdown =====================================
-Plug 'SidOfc/mkdx', { 'for': 'markdown' }
+" not sure if this is worth it at this point, syntax features are
+" overwritten by tree-sitter so may be a good idea to disable
+" see https://github.com/MDeiml/tree-sitter-markdown#extensions
+" Plug 'SidOfc/mkdx', { 'for': 'markdown' }
 
 
 " GENERIC ===========================================
@@ -52,7 +56,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'morhetz/gruvbox'
 Plug 'powerline/fonts'
 
-Plug 'udalov/kotlin-vim', { 'for': ['kts', 'kt', 'kotlin'] }
+Plug 'udalov/kotlin-vim', { 'for': [ 'kts', 'kt', 'kotlin'] }
 
 " :MasonUpdate updates registry contents
 Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
@@ -171,8 +175,8 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " augroup end
 
 "autocmd BufWritePre *.jsx call JsxBeautify()
-autocmd BufWritePre *.js call JsBeautify()
-autocmd BufWritePre *.html call HtmlBeautify()
+" autocmd BufWritePre *.js call JsBeautify()
+" autocmd BufWritePre *.html call HtmlBeautify()
 
 " set filetype to dart
 au BufRead,BufNewFile *.dart set filetype=dart
