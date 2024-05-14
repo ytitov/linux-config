@@ -23,6 +23,7 @@ Plug 'dart-lang/dart-vim-plugin', {'for' :['dart']}
 
 " rust =======================================
 " Plug 'rust-lang/rust.vim', {'for': ['rust']}
+Plug 'mrcjkb/rustaceanvim', {'for': ['rust']}
 Plug 'cespare/vim-toml', {'for': ['toml']}
 Plug 'maralla/vim-toml-enhance', {'for': ['toml']}
 
@@ -60,8 +61,8 @@ Plug 'udalov/kotlin-vim', { 'for': [ 'kts', 'kt', 'kotlin'] }
 
 " :MasonUpdate updates registry contents
 Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
-Plug 'williamboman/mason-lspconfig.nvim'
-Plug 'neovim/nvim-lspconfig'
+"Plug 'williamboman/mason-lspconfig.nvim'
+" Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 Plug 'mustache/vim-mustache-handlebars', { 'for': 'hbs' }
