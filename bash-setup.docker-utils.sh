@@ -66,3 +66,7 @@ function docker-remove-images-with-file() {
  #   #docker image rm $p
  # done
 }
+
+function docker-remove-all-images() {
+  docker rmi -f $(docker images -aq)
+}

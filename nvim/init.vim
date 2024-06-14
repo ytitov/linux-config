@@ -23,6 +23,7 @@ Plug 'dart-lang/dart-vim-plugin', {'for' :['dart']}
 
 " rust =======================================
 " Plug 'rust-lang/rust.vim', {'for': ['rust']}
+" using rustaceanvim instead
 Plug 'mrcjkb/rustaceanvim', {'for': ['rust']}
 Plug 'cespare/vim-toml', {'for': ['toml']}
 Plug 'maralla/vim-toml-enhance', {'for': ['toml']}
@@ -159,16 +160,17 @@ let g:ale_lint_on_filetype_changed=0
 let g:ale_rust_cargo_check_tests=1
 let g:ale_set_highlights=0
 let g:ale_completion_enabled=0 " because using deoplete
-let g:ale_linters={
-  \  'rust': ['cargo', 'fmt']
-  \  ,'markdown': []
+" 'rust': ['cargo', 'fmt']
+"
+
+let g:ale_linters = {
+  \  'markdown': []
   \  ,'sh': []
   \  ,'kotlin': []
   \  ,'java': []
   \ }
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
+"nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " PHP ========================================================================
 " augroup enterbuffer 

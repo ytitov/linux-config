@@ -1,3 +1,6 @@
+
+vim.opt.wildignore = { '*.o', '*.a', '__pycache__' }
+
 require("mason").setup()
 -- require("mason-lspconfig").setup()
 
