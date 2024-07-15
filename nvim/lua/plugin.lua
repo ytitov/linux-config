@@ -1,5 +1,5 @@
 
-vim.opt.wildignore = { '*.o', '*.a', '__pycache__' }
+vim.opt.wildignore = { '*.o', '*.a', '__pycache__', 'target' }
 
 require("mason").setup()
 -- require("mason-lspconfig").setup()
@@ -30,5 +30,32 @@ require 'nvim-treesitter.configs'.setup {
     enable = true,
     extended_mode = true,
     max_file_lines = nil,
+  },
+}
+
+vim.g.rustaceanvim = {
+  -- Plugin configuration
+  tools = {
+  },
+  -- LSP configuration
+  server = {
+    on_attach = function(client, bufnr)
+      -- you can also put keymaps in here
+    end,
+    default_settings = {
+      -- rust-analyzer language server configuration
+      -- see https://rust-analyzer.github.io/manual.html
+      ['rust-analyzer'] = {
+        cargo = {
+          buildScripts = {
+            -- run build scripts in project's root directory and not the workspace
+            invocationLocation = "root"
+          }
+        }
+      },
+    },
+  },
+  -- DAP configuration
+  dap = {
   },
 }
